@@ -1,6 +1,12 @@
 import React from 'react';
 
-function Favorite(favorite: Boolean) {
+type Props = {
+  favorite: boolean
+};
+
+function Favorite({
+  favorite
+}: Props) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg"
       width="24" height="24"

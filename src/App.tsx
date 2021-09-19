@@ -1,43 +1,19 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React, { useEffect } from 'react';
+import useStore from '/src/store';
+import Photo from './components/Photo';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const fetchPhotos = useStore(state => state.fetchPhotos);
+  const photos = useStore(state => Object.values(state.photos));
+  useEffect(() => {
+    fetchPhotos(10, 0);
+  });
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div>
+    {photos.map((photo) =>
+      <Photo key={photo.id} id={photo.id} />
+    )}
     </div>
   )
 }
