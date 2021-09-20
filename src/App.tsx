@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import useStore from '/src/store';
+import usePagination from './hooks/usePagination';
+import { useGetAllPhotos } from '/src/store';
 import Photo from './components/Photo';
 
 function App() {
-  const fetchPhotos = useStore(state => state.fetchPhotos);
-  const photos = useStore(state => Object.values(state.photos));
-  useEffect(() => {
-    fetchPhotos(10, 0);
-  });
+  const { fetchMore, status } = usePagination();
+  const photos = useGetAllPhotos();
+
+  useEffect(fetchMore, []);
 
   return (
     <div>
