@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import useStore from '/src/store';
+import useStore, { useToggleFavorite } from '/src/store';
 import { PhotoId } from '/src/types';
 
 import classes from './styles.module.css';
@@ -11,10 +11,10 @@ type Props = {
 function Photo({
   id
 }: Props) {
-  const setFavorite = useStore(state => state.setFavorite);
+  const toggleFavorite = useToggleFavorite();
   const { url, title, favorite } = useStore(useCallback(state => state.photos[id], [id]));
 
-  const onFavoriteClick = () => setFavorite(id, !favorite);
+  const onFavoriteClick = () => toggleFavorite(id);
   return (
     <div className={classes.photo}>
       <img src={url} className={classes.img} alt={title} />
