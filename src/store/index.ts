@@ -1,24 +1,25 @@
 import create from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, devtools } from 'zustand/middleware';
 import produce from 'immer';
 import { PhotoId, Photo, Photos } from './types';
 
 export interface Store {
   photos: Photos,
-  fetchPhotos: (first: number, after: PhotoId) => void;
+  after: PhotoId,
+  fetchPhotos: (first: number) => void;
   toggleFavorite: (id: PhotoId) => void;
 };
 
-const useStore = create<Store>(persist(
+const useStore = create<Store>(devtools(persist(
   (set, get) => ({
     photos: {},
-    // inspired by graphQL pagination
-    // give me the first 'first' elements after element 'after'
-    async fetchPhotos(first: number, after: PhotoId) {
+    after: 0,
+    async fetchPhotos(first: number = 5, after: PhotoId = get().after) {
       const data = await fetch(
-        `https://jsonplaceholder.typicode.com/photos?_start=${after || 0 }&_limit=${first}`
+        `https://jsonplaceholder.typicode.com/photos?_start=${after}&_limit=${first}`
       ).then(response => response.json());
         set(produce(state => {
+          state.after += first;
           data.forEach((photo: Photo) => {
             // only update state if photo didnt exist before
             // for this case the data will never become stale since it never changes
@@ -42,20 +43,6 @@ const useStore = create<Store>(persist(
   {
     name: 'vidiq-challenge-store',
   }
-));
-
-// store specific hooks
-export function useFetchPhotos() {
-  return useStore((state: Store) => state.fetchPhotos);
-}
-export function useToggleFavorite() {
-  return useStore((state: Store) => state.toggleFavorite);
-}
-export function useGetAllPhotos() {
-  return useStore((state: Store) => Object.values(state.photos));
-}
-export function useGetFavoritePhotos() {
-  return useStore((state: Store) => Object.values(state.photos).filter(photo => photo.favorite));
-}
+)));
 
 export default useStore;
