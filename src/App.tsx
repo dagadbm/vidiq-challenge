@@ -1,20 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import usePagination from './hooks/usePagination';
-import { useGetAllPhotos } from '/src/store';
-import Photo from './components/Photo';
+import useReactiveRef from './hooks/useReactiveRef';
+import useInfiniteScroll from './hooks/useInfiniteScroll';
+import useStore from '/src/store';
+import { fetchPhotosSelector, getAllPhotosSelector } from '/src/store/selectors';
+import { Photo as PhotoType } from '/src/types';
+import PhotoGallery from './components/PhotoGallery';
+
 
 function App() {
-  const { fetchMore, status } = usePagination();
-  const photos = useGetAllPhotos();
-
-  useEffect(fetchMore, []);
-
   return (
-    <div>
-    {photos.map((photo) =>
-      <Photo key={photo.id} id={photo.id} />
-    )}
-    </div>
+    <PhotoGallery />
   )
 }
 

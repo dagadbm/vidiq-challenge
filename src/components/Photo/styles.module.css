@@ -1,0 +1,15 @@
+.photo {
+  position: relative;
+  width: fit-content;
+}
+
+.overlay {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+}
+
+.img {
+  width: 300px;
+}

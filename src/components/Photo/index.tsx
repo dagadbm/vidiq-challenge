@@ -18,10 +18,10 @@ export default React.forwardRef(
     const onFavoriteClick = () => toggleFavorite(id);
     return (
       <div className={classes.photo}>
-      <img ref={ref} src={url} className={classes.img} alt={title} data-testid={id} />
-      <div className={classes.overlay} onClick={onFavoriteClick}>
-      <Favorite favorite={favorite} className={classes.favorite} />
-      </div>
+        <img ref={ref} src={url} className={classes.img} alt={title} />
+        <div className={classes.overlay} onClick={onFavoriteClick}>
+          <Favorite favorite={favorite} className={classes.favorite} />
+        </div>
       </div>
     );
   }
