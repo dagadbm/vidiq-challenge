@@ -1,7 +1,7 @@
 import create from 'zustand';
 import { persist, devtools } from 'zustand/middleware';
 import produce from 'immer';
-import { PhotoId, Photo, Photos } from './types';
+import { PhotoId, Photo, Photos } from '../types';
 
 export interface Store {
   photos: Photos,

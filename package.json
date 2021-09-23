@@ -5,7 +5,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --runInBand --watch"
   },
   "dependencies": {
     "immer": "^9.0.6",

@@ -1,7 +1,8 @@
 import React from 'react';
 
 type Props = {
-  favorite: boolean
+  favorite: boolean,
+  className?: string
 };
 
 function Favorite({

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import useStore from '/src/store';
-import { toggleFavoriteSelector } from '/src/store/selectors';
-import { PhotoId } from '/src/types';
+import useStore from '../../store';
+import { toggleFavoriteSelector } from '../../store/selectors';
+import { PhotoId } from '../../types';
 
 import classes from './styles.module.css';
 import Favorite from '../Favorite';
@@ -10,7 +10,7 @@ type Props = {
   id: PhotoId
 };
 
-export default React.forwardRef(
+export default React.forwardRef<HTMLImageElement, Props>(
   function Photo({ id }: Props, ref) {
     const toggleFavorite = useStore(toggleFavoriteSelector);
     const { url, title, favorite } = useStore(useCallback(state => state.photos[id], [id]));
