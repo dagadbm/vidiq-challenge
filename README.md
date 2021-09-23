@@ -14,11 +14,6 @@ Some of my mantras when doing UI work:
 ## Setup
 Just `npm install`and `npm run dev`.
 
-If you want a production build you can run `npm run build` followed by `npm run serve`
-courtesy of vite.
-
-You can also very easily deploy to netlify et al. but I was unsure you would want that.
-
 The following sections will explain my reasoning behind each choice, why it was good (or bad)
 and what I would do differently.
 
@@ -155,3 +150,5 @@ But typescript... jesus christ. Hopefuly you will prove me wrong and sell me how
 # Conclusion
 I had fun doing this challenge but to be fair I was feeling a bit burned out towards the end I could try and push for more tests but my poor decision on thinking that typescript is just javascript with types got the best of me. I am curious if you can help me fix that jest error.
 Looking forward to talking to you guys.
+
+PS: Dont try to npm run build it wont work because of the typescript types + weird import errors which make no sense. This is probably fault of vite....
