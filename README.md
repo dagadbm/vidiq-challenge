@@ -1,15 +1,16 @@
 # WARNING
 The UI is terrible. I tried to make it as simple as I could.
+
 I am not a good designer but I am good at looking at other peoples design,
 improving it and making it more consistent
 with the overall codebase.
 
-Some of my mantras when doing UI work:
+Some of my guidelines when doing UI work:
 - padding/margins/spacings of any kind, multiples of 8!
 - Multiples of 8!
-- Prefer the browser do most of the placements instead of forcing width/height
+- Prefer the browser do most of the placements instead of forcing width/height (when possible)
 - css grid for two dimensions, flexbox for one dimensions
-- position absolute when needed or when performance in rendering is a problem (I have a fun story here if you remember to ask me)
+- position absolute when needed or when performance in rendering is a problem (I have a fun story here if you are curious)
 
 ## Setup
 Just `npm install`and `npm run dev`.
@@ -21,36 +22,44 @@ and what I would do differently.
 ### Bootstrap Tool
 I looked at several alternatives to bootstrap react. I have been out of the react scene
 for some time now so I always like to take this opportunity and investigate whats up and running.
+
 I found some pages on react docs and so on which showed some alternatives to the tried and tested
 `create react app`. But I have been using vite for challenges lately so I went with it.
 Maybe another day i will try snowpack.
 
 I had quite some problems with the import paths because one: neovim with lsp gave me an error saying the path didnt exist (which it does because the app works).
-Jest also broke exactly in the same manner so appologies for the imports.
-I could have done the @/ mapping that people in vue usually use but I decided against it to keep it simple.
+Jest also broke exactly in the same manner so appologies for the imports. I could have done the @/ mapping that people in vue usually use but I decided against it to keep it simple.
 
 If this was a production grade app i would go with create react app because vite also
 has its own quirks and issues which, when using typescript, make it even worse.
 
 ### JS vs TS
 I decided to go with typescript because it is what vidIQ uses.
+
 I dont want to be biased or negative, but my experience with typecript was terrible.
+
 I couldnt even do tests because of forwardref typing which wasn't working (i left a comment on the test).
+
 I dont see the benefit, but I am sure that on a more scaled project with patterns in place and good usage it will improve.
 
 Still, it is scary that there are 2 or 3 github repos that contain cheasheets for typescript and in each of those repos contain 30 or more links
 for you to really understand and grasp how easy and amazing typescript is...
+
 There is even discussion about how the best future proof way to import react is... Seriously... You have to be outside of the react community for some time and then back
 in again to see how ridiculous this all is. I spent more time thinking about closures and scopes and "omg does this component re-render or not" than actually building the product.
 
 ### Store
 I looked at a couple of stores, including the classic redux which seemed to be a bit more formal now due to their recommended toolkit + RTK.
+
 I googled a bit and found out that a lot of people are using zustand now.
+
 I also knew about immer and to be fair after using Vue for quite some time having to think about creating new objects/array because of react === design decision
 is a terrible experience. I saw immer was very low in terms of bundle (but still a higher bundle size than zustand) but I went for it.
 
 I found the experience interesting but I think in terms of test its probably harder to mock the store.
+
 I also dont like they dont have namespaced stores (i mean you can kind of fake it but still).
+
 I also had to create selectors to prevent all those re-renders when the store changes.
 
 ### Styling
@@ -60,23 +69,26 @@ Since the css was so basic I found no need for scss/sass.
 Again in a production grade I would probably use styled components (which i have used in the past).
 
 ## Initial Approach
-
 For this challenge I decided to start working bottom up.
+
 Firstly designing the store, then the components and in the middle create/remove the necessary
 refactorings/abstractions that pop up to me while I am coding.
-Afterwards I decided to try and fetch the photos and show the on screen first. (with favorites)
-After that creating the infinite scroll logic. Followed by the toggle favorite list.
+
+Afterwards I decided to try and fetch the photos and show them on screen first (with favorites).
+
+After that creating the infinite scroll logic followed by the toggle favorite list.
+
 Afterwards I would add tests (to be honest I never did TDD and I find it very hard to do on front-end but here is hoping it is possible).
 
 ## Architecture
 After all is said and done this is the final architecture result.
+
 I will briefly explain what each component does, how it could be improved, why I decided for it and humps I found along the way.
 
 ### Components
 For this section I highly recommend you have another tab opened with the component in question for easier reading.
 
-I have 3 components: **Favorite**, **Photo** and **PhotoGallery**.
-The App component just renders the PhotoGallery.
+I have 3 components: **Favorite**, **Photo** and **PhotoGallery**. The App component just renders the PhotoGallery.
 
 The **Favorite** component is basically just an svg of a heart which you can toggle
 via props. I decided to do it this way just to not have to handle with the whole webpack-svg loader drama. Seems that vite had an svg loader but this is all very new.
@@ -143,8 +155,11 @@ Of course in production I am unsure if this would be the best solution, of cours
 ## Tests
 Oh boy...
 I have to say, after installing a bazzilion packages to support jest, react-testing-library and typescript I spent more timing fighting the useless typescript errors than writing tests.
+
 I honestly gave up, the learning curve to properly fix the problem and understand it would be too big (you can check out Photo/index.spec.js for the error).
-I have written quite complex tests in Vue that even involve dispatching actions from outside the component where I have components that listen to the actions (I can show you if you are interested). I had to do some tests on contenteditable fields (plot twist jsdom does not support contenteditable. So I have some experience here.
+
+I have written quite complex tests in Vue that even involve dispatching actions from outside the component where I have components that listen to the actions (I can show you if you are interested).
+I had to do some tests on contenteditable fields (plot twist jsdom does not support contenteditable. So I have some experience here.
 But typescript... jesus christ. Hopefuly you will prove me wrong and sell me how amazing it is.
 
 # Conclusion
